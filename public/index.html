@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="./styles.css" />
+    <title>Wordle Tester</title>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Wordle Tester</h1>
+      <p class="subtitle">Test your Wordle Solver Algorithm</p>
+    </div>
+    <div class="container">
+      <div class="board-container">
+        <div class="board">
+          <div class="row">
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+          </div>
+          <div class="row">
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+          </div>
+          <div class="row">
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+          </div>
+          <div class="row">
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+          </div>
+          <div class="row">
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+          </div>
+          <div class="row">
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+          </div>
+        </div>
+      </div>
+      <div class="editor-container">
+        <textarea id="editor" spellcheck="false">
+/**
+* Generates a Wordle guess.
+* @param {string[]} dict - The list of valid words.
+* @param {object[]} guesses - The list of guesses
+* @param {string} guesses[].word - The submitted word.
+* @param {string} guesses[].score - The score. 
+                    '+' means correct value, correct spot
+                    'x' means incorrect value
+                    '/' means correct value, wrong spot
+* @return {string} the guess
+*/
+function guessWord(dict, guesses) {  
+    return dict[Math.floor(Math.random() * dict.length)];
+}</textarea
+        >
+        <div class="actions">
+          <button id="reset">Reset</button>
+          <button id="guess">Guess</button>
+          <button id="submit">Submit</button>
+        </div>
+      </div>
+    </div>
+    <iframe id="env" sandbox="allow-scripts"></iframe>
+    <div class="dist">
+      <h2>
+        Win Distributions
+        <span id="gamect" class="muted">0/1000</span>
+      </h2>
+      <div class="progress-container">
+        <p class="val">0</p>
+        <div class="progress"><div class="progress-bar loss"></div></div>
+        <p class="ct">0</p>
+      </div>
+      <div class="progress-container">
+        <p class="val">1</p>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <p class="ct">0</p>
+      </div>
+      <div class="progress-container">
+        <p class="val">2</p>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <p class="ct">0</p>
+      </div>
+      <div class="progress-container">
+        <p class="val">3</p>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <p class="ct">0</p>
+      </div>
+      <div class="progress-container">
+        <p class="val">4</p>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <p class="ct">0</p>
+      </div>
+      <div class="progress-container">
+        <p class="val">5</p>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <p class="ct">0</p>
+      </div>
+      <div class="progress-container">
+        <p class="val">6</p>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <p class="ct">0</p>
+      </div>
+    </div>
+    <div id="error"></div>
+    <script type="text/javascript" src="./app.js"></script>
+  </body>
+</html>

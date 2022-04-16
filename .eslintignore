@@ -1,0 +1,7 @@
+.DS_Store
+dist
+out
+*.json
+.eslintrc.js
+spack.config.js
+jest.config.js
