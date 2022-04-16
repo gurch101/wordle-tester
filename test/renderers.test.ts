@@ -271,11 +271,27 @@ describe("renderers", () => {
 
     it("resets the chart on RESET_ACTION", () => {
       const game = new Wordle("arose");
+      game.submit("cloak");
+      game.submit("chaos");
+      game.submit("small");
+      game.submit("shoot");
+      game.submit("foots");
       game.submit("arose");
       renderer.render(SUBMIT_ACTION, game);
       renderer.render(RESET_ACTION, game);
 
-      expect(bars[1].querySelector(".progress-bar").style.width).toBe("0%");
+      expect(
+        [...bars].filter(
+          (bar) => bar.querySelector(".progress-bar").style.width !== "0%"
+        )
+      ).toHaveLength(0);
+      expect(
+        [...bars].filter((bar) => bar.querySelector(".ct").textContent !== "0")
+      ).toHaveLength(0);
+
+      renderer.render(SUBMIT_ACTION, game);
+
+      expect(bars[6].querySelector(".ct").textContent).toBe("1");
     });
   });
 });

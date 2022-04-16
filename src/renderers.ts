@@ -81,7 +81,7 @@ class WordleDistributionChartRenderer {
     switch (action) {
       case RESET_ACTION:
         this.ct = 0;
-        this.scores = new Array(MAX_GUESSES).fill(0);
+        this.scores = new Array(MAX_GUESSES + 1).fill(0);
         break;
       case SUBMIT_ACTION:
         this.ct++;
