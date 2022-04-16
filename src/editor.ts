@@ -9,8 +9,12 @@ class Editor {
   private renderer: (action: number, game: Wordle) => void;
   private iframe: HTMLIFrameElement;
   private editor: HTMLTextAreaElement;
+  private submitButton: HTMLButtonElement;
+  private resetButton: HTMLButtonElement;
+  private guessButton: HTMLButtonElement;
   private error: HTMLElement;
   private code: string;
+  private isSubmissionRunning: boolean;
 
   constructor(renderer) {
     this.game = new Wordle();
@@ -18,15 +22,14 @@ class Editor {
     this.iframe = null;
     this.editor = document.getElementById("editor") as HTMLTextAreaElement;
     this.error = document.getElementById("error");
-    document
-      .getElementById("reset")
-      .addEventListener("click", this.reset.bind(this));
-    document
-      .getElementById("guess")
-      .addEventListener("click", this.guess.bind(this));
-    document
-      .getElementById("submit")
-      .addEventListener("click", this.submit.bind(this));
+    this.submitButton = document.getElementById("submit") as HTMLButtonElement;
+    this.resetButton = document.getElementById("reset") as HTMLButtonElement;
+    this.guessButton = document.getElementById("guess") as HTMLButtonElement;
+
+    this.isSubmissionRunning = false;
+    this.resetButton.addEventListener("click", this.reset.bind(this));
+    this.guessButton.addEventListener("click", this.guess.bind(this));
+    this.submitButton.addEventListener("click", this.submit.bind(this));
 
     // allow tabs in textarea
     this.editor.addEventListener("keydown", function (e) {
@@ -46,9 +49,9 @@ class Editor {
     });
   }
 
-  reset() {
+  reset(initIndex?: number) {
     this._clearError();
-    this.game = new Wordle();
+    this.game = new Wordle("", initIndex);
     this.renderer(RESET_ACTION, this.game);
     this._insertCode();
   }
@@ -112,9 +115,10 @@ class Editor {
         }
         this.renderer(SUBMIT_ACTION, this.game);
       } catch (e) {
+        console.log(e);
         this._showError(e.message);
       }
-      if (numGamesRemaining > 1) {
+      if (numGamesRemaining > 1 && this.isSubmissionRunning) {
         this.game = new Wordle();
         this._submitAll(--numGamesRemaining);
       }
@@ -122,8 +126,21 @@ class Editor {
   }
 
   submit() {
-    this.reset();
-    this._submitAll(NUM_GAMES_TO_TEST);
+    if(this.isSubmissionRunning) {
+      this.isSubmissionRunning = false;
+      this.submitButton.textContent = "Submit";
+      this.submitButton.className = "";
+      this.guessButton.disabled = false;
+      this.resetButton.disabled = false;
+    } else {
+      this.reset(0);
+      this.isSubmissionRunning = true;
+      this.submitButton.textContent = "Stop";
+      this.submitButton.className = "red";
+      this.guessButton.disabled = true;
+      this.resetButton.disabled = true;
+      this._submitAll(NUM_GAMES_TO_TEST);
+    }
   }
 }
 

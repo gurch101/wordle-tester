@@ -185,6 +185,22 @@ button:hover {
   color: black;
 }
 
+button.red {
+  border-color: #c60f0f;
+}
+
+button.red:hover {
+  background-color: #c60f0f;
+  color: white;
+}
+
+button:disabled {
+  cursor: default !important;
+  background-color: #e0e1e2 !important;
+  color: rgba(0,0,0,.6) !important;
+  border-color: #e0e1e2 !important;
+}
+
 .actions {
   text-align: right;
   margin-top: 10px;

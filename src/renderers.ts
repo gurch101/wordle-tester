@@ -54,7 +54,7 @@ class WordleBoardRenderer {
         }
         break;
       case GUESS_ACTION:
-        this._renderGuess(wordle.guesses.length - 1, wordle.guesses.at(-1));
+        this._renderGuess(wordle.guesses.length - 1, wordle.guesses[wordle.guesses.length - 1]);
         break;
     }
   }

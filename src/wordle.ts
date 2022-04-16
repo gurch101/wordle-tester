@@ -5,12 +5,15 @@ interface Guess {
   word: string;
 }
 
+let currIndex = 0;
+
 class Wordle {
   private word: string;
   private guesses: Guess[];
 
-  constructor(word?: string) {
-    this.word = word || WORD_LIST[Math.floor(Math.random() * WORD_LIST.length)];
+  constructor(word?: string, initIndex?: number) {
+    currIndex = typeof initIndex === "number" ? initIndex : currIndex;
+    this.word = word || WORD_LIST[currIndex++];
     this.guesses = [];
   }
 
@@ -44,8 +47,7 @@ class Wordle {
     return (
       this.guesses.length === MAX_GUESSES ||
       (this.guesses.length > 0 &&
-        this.guesses
-          .at(-1)
+        this.guesses[this.guesses.length - 1]
           .score.split("")
           .filter((ch) => ch === "+").length === LETTERS_PER_WORD)
     );
@@ -64,7 +66,7 @@ class Wordle {
   submit(word) {
     if (
       this.guesses.length >= MAX_GUESSES ||
-      (this.guesses.length > 0 && this.guesses.at(-1).score === "+++++")
+      (this.guesses.length > 0 && this.guesses[this.guesses.length - 1].score === "+++++")
     ) {
       throw new Error("Game over: no more guesses allowed");
     } else if (typeof word !== "string") {

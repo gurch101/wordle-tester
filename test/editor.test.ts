@@ -28,6 +28,11 @@ describe("Editor", () => {
     jest.spyOn(global, "setTimeout");
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+    jest.clearAllTimers();
+  });
+
   it("should guess a word when guess is clicked", () => {
     (document.querySelector("#guess") as HTMLButtonElement).click();
 
@@ -74,5 +79,35 @@ describe("Editor", () => {
     expect(setTimeout).toHaveBeenCalledTimes(2);
     expect(mockRenderer).toHaveBeenCalledTimes(2);
     expect(mockRenderer.mock.calls[1][0]).toBe(SUBMIT_ACTION);
+  });
+
+  it("should change the submit button to a stop button when submit is clicked", () => {
+    editor.submit();
+
+    expect(document.querySelector("#submit").textContent).toBe("Stop");
+  });
+
+  it("should stop the submission when stop is clicked and change the button back to submit", () => {
+    editor.submit();
+    editor.submit();
+    expect(setTimeout).toHaveBeenCalledTimes(1);
+    expect(document.querySelector("#submit").textContent).toBe("Submit");
+    jest.runOnlyPendingTimers();
+    expect(setTimeout).toHaveBeenCalledTimes(1);
+  });
+
+  it('should disable the guess and reset buttons when submit is clicked', () => {
+    editor.submit();
+
+    expect((document.querySelector("#reset") as HTMLButtonElement).disabled).toBeTruthy();
+    expect((document.querySelector("#guess") as HTMLButtonElement).disabled).toBeTruthy();
+  });
+
+  it('should re-enable the guess and reset buttons when stop is clicked', () => {
+    editor.submit();
+    editor.submit();
+
+    expect((document.querySelector("#reset") as HTMLButtonElement).disabled).toBeFalsy();
+    expect((document.querySelector("#guess") as HTMLButtonElement).disabled).toBeFalsy();
   });
 });
