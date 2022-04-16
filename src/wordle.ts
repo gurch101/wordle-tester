@@ -5,12 +5,15 @@ interface Guess {
   word: string;
 }
 
+let currIndex = 0;
+
 class Wordle {
   private word: string;
   private guesses: Guess[];
 
-  constructor(word?: string) {
-    this.word = word || WORD_LIST[Math.floor(Math.random() * WORD_LIST.length)];
+  constructor(word?: string, initIndex?: number) {
+    currIndex = typeof initIndex === "number" ? initIndex : currIndex;
+    this.word = word || WORD_LIST[currIndex++];
     this.guesses = [];
   }
 
